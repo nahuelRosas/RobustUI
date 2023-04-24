@@ -1,0 +1,21 @@
+{
+  "name": "constructor",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Nahuel Rosas",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "devDependencies": {
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-custom": "*",
+    "react": "latest",
+    "tsconfig": "*",
+    "typescript": "latest"
+  }
+}

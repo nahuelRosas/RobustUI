@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "extends": ["custom"],
+  "settings": {
+    "next": {
+      "rootDir": ["apps/*/"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  }
+}

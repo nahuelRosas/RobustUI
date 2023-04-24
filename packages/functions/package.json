@@ -1,0 +1,21 @@
+{
+	"name": "functions",
+	"version": "1.0.0",
+	"main": "./index.ts",
+	"types": "./types.ts",
+	"scripts": {
+		"lint": "eslint \"**/*.ts*\""
+	},
+	"devDependencies": {
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
+		"eslint": "latest",
+		"eslint-config-custom": "*",
+		"react": "latest",
+		"tsconfig": "*",
+		"typescript": "latest"
+	},
+	"author": "Nahuel Rosas",
+	"license": "ISC",
+	"description": ""
+}
