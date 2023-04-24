@@ -245,15 +245,15 @@ export function injectCSS({
 
 	const completedStyle = [cssBase, cssHover, cssAfter, cssBefore, keyFrames.join('')].join('\n');
 
-	const styleDocument = document.getElementById(`stylish-css`);
+	const Robustocument = document.getElementById(`Robust-css`);
 
-	if (!styleDocument) {
+	if (!Robustocument) {
 		const style = document.createElement('style');
-		style.id = `stylish-css`;
+		style.id = `Robust-css`;
 		style.innerHTML = completedStyle;
 		document.head.appendChild(style);
 	}
-	if (styleDocument && !styleDocument.innerHTML.includes(completedStyle)) {
-		styleDocument.innerHTML += completedStyle;
+	if (Robustocument && !Robustocument.innerHTML.includes(completedStyle)) {
+		Robustocument.innerHTML += completedStyle;
 	}
 }

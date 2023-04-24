@@ -17,7 +17,7 @@
 		"prettier": "latest",
 		"turbo": "latest"
 	},
-	"name": "stylish",
+	"name": "Robust",
 	"author": "Nahuel Rosas",
 	"packageManager": "npm@9.4.1",
 	"workspaces": [

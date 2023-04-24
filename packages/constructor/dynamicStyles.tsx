@@ -29,7 +29,7 @@ export function DynamicStyles<T extends object>({
 					component: Element,
 					props,
 				},
-				prefix: `Styled-CSS-${componentName}`,
+				prefix: `Robust-CSS-${componentName}`,
 			}),
 		);
 		const domProps = Object.entries(props).reduce((acc, [key, value]) => {
@@ -63,7 +63,7 @@ export function DynamicStyles<T extends object>({
 						component: Element,
 						props,
 					},
-					prefix: `Styled-CSS-${componentName}`,
+					prefix: `Robust-CSS-${componentName}`,
 				});
 				className.current = newClassName;
 				setPreviousClassName(newClassName);
