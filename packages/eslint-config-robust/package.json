@@ -16,6 +16,6 @@
     "access": "public"
   },
   "scripts": {
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages"
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages && rm -rf CHANGELOG.md"
   }
 }
