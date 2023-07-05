@@ -1,0 +1,17 @@
+export const textAlign = {
+  center: "center",
+  end: "end",
+  inherit: "inherit",
+  initial: "initial",
+  justify: "justify",
+  left: "left",
+  revert: "revert",
+  right: "right",
+  start: "start",
+  unset: "unset",
+  "-webkit-auto": "-webkit-auto",
+  "-webkit-center": "-webkit-center",
+  "-webkit-left": "-webkit-left",
+  "-webkit-match-parent": "-webkit-match-parent",
+  "-webkit-right": "-webkit-right",
+};

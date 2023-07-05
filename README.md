@@ -1,99 +1,192 @@
-<h1>Robust UI Repository</h1>
+# Turborepo Design System Starter
 
-<p>The Robust UI repository is a React library that provides real-time CSS injection. Currently in the alpha phase, it offers limited components. The repository includes the <code>DynamicStyles</code> and <code>InjectCSS</code> modules, which are key components of the system.</p>
+This guide explains how to use a React design system starter powered by:
 
-<h2>DynamicStyles</h2>
+- 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
+- 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
+- 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
+- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
 
-<pre><code>import {
-  generateId,
-  injectCSS,
-  safeJSON,
-  RecoveryBreakPointValue,
-  cssPropertyMappings,
-} from 'functions';
-import React, { forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
+As well as a few others functions preconfigured:
 
-import { BasePropsT } from './types';
-import { RecoveryActiveProvider } from '../hooks/useActiveProvider';
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+- [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
+- [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
 
-const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+## Using this example
 
-export function DynamicStyles&lt;T extends object&gt;({
-  Component,
-}: {
-  Component: React.ElementType&lt;T&gt;;
-}): React.ForwardRefExoticComponent&lt;
-  React.PropsWithoutRef&lt;BasePropsT &amp; T&gt;&gt; &amp; React.RefAttributes&lt;unknown&gt;
-> {
-  // Functionality of DynamicStyles...
+Run the following command:
+
+```sh
+npx create-turbo@latest -e design-system
+```
+
+### Useful Commands
+
+- `pnpm build` - Build all packages, including the Storybook site
+- `pnpm dev` - Run all packages locally and preview with Storybook
+- `pnpm lint` - Lint all packages
+- `pnpm changeset` - Generate a changeset
+- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
+
+## Turborepo
+
+[Turborepo](https://turbo.build/repo) is a high-performance build system for JavaScript and TypeScript codebases. It was designed after the workflows used by massive software engineering organizations to ship code at scale. Turborepo abstracts the complex configuration needed for monorepos and provides fast, incremental builds with zero-configuration remote caching.
+
+Using Turborepo simplifies managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
+
+## Apps & Packages
+
+This Turborepo includes the following packages and applications:
+
+- `apps/docs`: Component documentation site with Storybook
+- `packages/@acme/core`: Core React components
+- `packages/@acme/utils`: Shared React utilities
+- `packages/@acme/tsconfig`: Shared `tsconfig.json`s used throughout the Turborepo
+- `packages/eslint-config-acme`: ESLint preset
+
+Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
+
+This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
+
+### Compilation
+
+To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
+
+Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
+
+For `acme-core`, the `build` command is the following:
+
+```bash
+tsup src/index.tsx --format esm,cjs --dts --external react
+```
+
+`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
+
+```json:acme-core/package.json
+{
+  "name": "@acme/core",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
 }
-</code></pre>
+```
 
-<p>The <code>DynamicStyles</code> module is responsible for generating dynamic styles and handling component updates. It uses the following imports:</p>
+Run `pnpm build` to confirm compilation is working correctly. You should see a folder `acme-core/dist` which contains the compiled output.
 
-<ul>
-  <li><code>generateId</code>: Generates a unique class name for each component instance.</li>
-  <li><code>injectCSS</code>: Injects CSS styles into the document.</li>
-  <li><code>safeJSON</code>: Serializes JavaScript objects to ensure safe comparison.</li>
-  <li><code>RecoveryBreakPointValue</code>: Retrieves the current breakpoint value.</li>
-  <li><code>cssPropertyMappings</code>: Maps CSS property names.</li>
-</ul>
+```bash
+acme-core
+└── dist
+    ├── index.d.ts  <-- Types
+    ├── index.js    <-- CommonJS version
+    └── index.mjs   <-- ES Modules version
+```
 
-<p>The <code>DynamicStyles</code> function takes a <code>Component</code> prop and returns a wrapped component that handles dynamic styles. It uses the <code>useLayoutEffect</code> or <code>useEffect</code> hook depending on whether the code is running in a browser environment. The component maintains its own class name, DOM props, and other state variables.</p>
+## Components
 
-<p>The function performs the following tasks:</p>
+Each file inside of `acme-core/src` is a component inside our design system. For example:
 
-<ol>
-  <li>Initializes the class name and DOM props using <code>generateId</code> and <code>Object.entries</code>.</li>
-  <li>Manages component updates by comparing previous and current props.</li>
-  <li>Injects CSS styles using <code>injectCSS</code> based on the class name and component props.</li>
-  <li>Checks the component's mount status using <code>RecoveryActiveProvider</code>.</li>
-  <li>Renders the wrapped component if it is mounted, otherwise returns <code>null</code>.</li>
-</ol>
+```tsx:acme-core/src/Button.tsx
+import * as React from 'react';
 
-<h2>InjectCSS</h2>
-
-<pre><code>import {
-  createCSSRule,
-  createStyleSheet,
-  cssPropertyMappings,
-  getPropValueGetters,
-  getPropValueWithBreakpoint,
-  InjectCSST,
-} from 'functions';
-import { defaultTheme } from 'theme';
-
-const UNDEFINED_STR = 'undefined';
-const OBJECT_STR = 'object';
-
-export function injectCSS({
-  classSelector,
-  componentProps,
-  breakPoint,
-  theme = defaultTheme,
-}: InjectCSST): void {
-  // Functionality of injectCSS...
+export interface ButtonProps {
+  children: React.ReactNode;
 }
-</code></pre>
 
-<p>The <code>InjectCSS</code> module provides the functionality to inject CSS styles into the document. It imports various functions and the default theme from the <code>functions</code> and <code>theme</code> modules, respectively.</p>
+export function Button(props: ButtonProps) {
+  return <button>{props.children}</button>;
+}
 
-<p>The <code>injectCSS</code> function takes an object as a parameter with the following properties:</p>
+Button.displayName = 'Button';
+```
 
-<ul>
-  <li><code>classSelector</code>: The class selector for the component.</li>
-  <li><code>componentProps</code>: The props of the component.</li>
-  <li><code>breakPoint</code>: The current breakpoint value.</li>
-  <li><code>theme</code> (optional): The theme object.</li>
-</ul>
+When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
 
-<p>The function performs the following tasks:</p>
+```tsx:acme-core/src/index.tsx
+import * as React from "react";
+export { Button, type ButtonProps } from "./Button";
+// Add new component exports here
+```
 
-<ol>
-  <li>Checks if the styles have already been injected to avoid duplicates.</li>
-  <li>Generates CSS rules based on the component's props and the theme.</li>
-  <li>Creates a stylesheet using <code>createStyleSheet</code> with the generated styles.</li>
-  <li>Injects the stylesheet into the document by appending it to a <code>&lt;style&gt;</code> tag in the <code>&lt;head&gt;</code>.</li>
-</ol>
+## Storybook
 
-<p>This provides an overview of the Robust CSS repository's structure and functionality. For more detailed information, refer to the source code and accompanying documentation.</p>
+Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
+
+- Use Vite to bundle stories instantly (in milliseconds)
+- Automatically find any stories inside the `stories/` folder
+- Support using module path aliases like `@acme-core` for imports
+- Write MDX for component documentation pages
+
+For example, here's the included Story for our `Button` component:
+
+```js:apps/docs/stories/button.stories.mdx
+import { Button } from '@acme-core/src';
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+
+<Meta title="Components/Button" component={Button} />
+
+# Button
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
+
+## Props
+
+<Props of={Box} />
+
+## Examples
+
+<Preview>
+  <Story name="Default">
+    <Button>Hello</Button>
+  </Story>
+</Preview>
+```
+
+This example includes a few helpful Storybook scripts:
+
+- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
+- `pnpm build`: Builds the Storybook UI and generates the static HTML files
+- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
+
+## Versioning & Publishing Packages
+
+This example uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
+
+You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHub repository settings to enable access to npm. It's also worth installing the [Changesets bot](https://github.com/apps/changeset-bot) on your repository.
+
+### Generating the Changelog
+
+To generate your changelog, run `pnpm changeset` locally:
+
+1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
+1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
+1. If doing the first major version, confirm you want to release.
+1. Write a summary for the changes.
+1. Confirm the changeset looks as expected.
+1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
+
+### Releasing
+
+When you push your code to GitHub, the [GitHub Action](https://github.com/changesets/action) will run the `release` script defined in the root `package.json`:
+
+```bash
+turbo run build --filter=docs^... && changeset publish
+```
+
+Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `acme` as the npm organization. To change this, do the following:
+
+- Rename folders in `packages/*` to replace `acme` with your desired scope
+- Search and replace `acme` with your desired scope
+- Re-run `pnpm install`
+
+To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
+
+```diff
+- "publishConfig": {
+-  "access": "public"
+- },
+```

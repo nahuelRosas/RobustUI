@@ -1,0 +1,40 @@
+{
+  "name": "@robust/constructor",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "license": "MIT",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup-node src/index.ts* --format esm,cjs --dts",
+    "test": "jest --verbose",
+    "dev": "tsup src/index.ts* --format esm,cjs --watch --dts --external react",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages"
+  },
+  "devDependencies": {
+    "@robust/functions": "workspace:*",
+    "@robust/hooks": "workspace:*",
+    "@robust/theme": "workspace:*",
+    "@robust/tools": "workspace:*",
+    "@robust/tsconfig": "workspace:*",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/react": "^18.2.14",
+    "@types/react-dom": "^18.2.6",
+    "eslint": "^8.43.0",
+    "eslint-config-robust": "workspace:*",
+    "extend-expect": "link:@testing-library/jest-dom/extend-expect",
+    "jest-environment-jsdom": "^29.5.0",
+    "react": "^18.2.0",
+    "tsup": "^7.1.0",
+    "typescript": "4.9.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

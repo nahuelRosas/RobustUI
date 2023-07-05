@@ -1,0 +1,11 @@
+{
+	"extends": "@robust/tsconfig/nextjs.json",
+	"include": [
+		"."
+	],
+	"exclude": [
+		"dist",
+		"build",
+		"node_modules"
+	]
+}

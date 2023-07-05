@@ -1,25 +1,26 @@
 {
   "name": "web",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages && rm -rf .next"
   },
   "dependencies": {
-    "next": "latest",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "ui": "*"
-  },
-  "devDependencies": {
-    "@types/node": "^17.0.12",
-    "@types/react": "^18.0.22",
-    "@types/react-dom": "^18.0.7",
-    "eslint-config-custom": "*",
-    "tsconfig": "*",
-    "typescript": "^4.5.3"
+    "@robust/tsconfig": "workspace:*",
+    "@robust/nextjs": "workspace:*",
+    "@robust/provider": "workspace:*",
+    "@types/node": "20.3.2",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "eslint": "8.43.0",
+    "eslint-config-next": "13.4.7",
+    "next": "13.4.7",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "5.1.6"
   }
 }

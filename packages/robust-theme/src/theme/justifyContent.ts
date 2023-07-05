@@ -1,0 +1,18 @@
+export const justifyContent = {
+  center: "center",
+  end: "end",
+  flexEnd: "flex-end",
+  flexStart: "flex-start",
+  inherit: "inherit",
+  initial: "initial",
+  left: "left",
+  normal: "normal",
+  revert: "revert",
+  right: "right",
+  spaceAround: "space-around",
+  spaceBetween: "space-between",
+  spaceEvenly: "space-evenly",
+  start: "start",
+  stretch: "stretch",
+  unset: "unset",
+};

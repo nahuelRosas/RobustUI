@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 16",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "lib": ["ES6","DOM","DOM.Iterable","ESNext"],
+    "module": "commonjs",
+    "target": "ES2020"
+  }
+}

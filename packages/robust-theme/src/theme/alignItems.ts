@@ -1,0 +1,16 @@
+export const alignItems = {
+  baseline: "baseline",
+  center: "center",
+  end: "end",
+  flexEnd: "flex-end",
+  flexStart: "flex-start",
+  inherit: "inherit",
+  initial: "initial",
+  normal: "normal",
+  revert: "revert",
+  selfEnd: "self-end",
+  selfStart: "self-start",
+  start: "start",
+  stretch: "stretch",
+  unset: "unset",
+};

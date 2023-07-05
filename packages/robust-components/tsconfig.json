@@ -1,0 +1,18 @@
+{
+	"extends": "@robust/tsconfig/robust.json",
+	"include": [
+		"."
+	],
+	"exclude": [
+		"dist",
+		"build",
+		"node_modules"
+	],
+	"compilerOptions": {
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		}
+	}
+}
