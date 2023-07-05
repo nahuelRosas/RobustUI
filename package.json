@@ -13,7 +13,7 @@
     "build:packages": "turbo run build --filter=!./apps/*",
     "dev": "turbo run dev --no-cache --continue --filter=!./packages/*",
     "lint": "turbo run lint",
-    "clean": "turbo run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml && rm -rf CHANGELOG.md",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
