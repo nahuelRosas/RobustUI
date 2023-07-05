@@ -1,192 +1,141 @@
-# Turborepo Design System Starter
+# Robust
 
-This guide explains how to use a React design system starter powered by:
+Robust is a system for generating React components with real-time CSS injection. It is programmed in TypeScript, providing type safety and enhanced developer experience.
 
-- 🏎 [Turborepo](https://turbo.build/repo) — High-performance build system for Monorepos
-- 🚀 [React](https://reactjs.org/) — JavaScript library for user interfaces
-- 🛠 [Tsup](https://github.com/egoist/tsup) — TypeScript bundler powered by esbuild
-- 📖 [Storybook](https://storybook.js.org/) — UI component environment powered by Vite
+## Installation
 
-As well as a few others functions preconfigured:
+You can install Robust by downloading it from the [GitHub repository](https://github.com/nahuelRosas/Robust.git). After downloading, use [pnpm](https://pnpm.io/) to install the dependencies. The `prepare` script defined in the `package.json` file will automatically build all the files within the `packages` folder.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-- [Changesets](https://github.com/changesets/changesets) for managing versioning and changelogs
-- [GitHub Actions](https://github.com/changesets/action) for fully automated package publishing
+## Usage
 
-## Using this example
+To use Robust, you need to make use of the `Provider` component from the `@robust/nextjs` repository. Note that the functionality has only been tested with Next.js and may not work in other React environments.
 
-Run the following command:
+Here's an example of how to use Robust in a Next.js application:
 
-```sh
-npx create-turbo@latest -e design-system
-```
+```tsx
+import type { AppProps } from "next/app";
+import { Provider, Header, Text, Icon, Flex } from "@robust/nextjs";
+import React from "react";
+import { SideMenu } from "@/components/drawer";
 
-### Useful Commands
+export default function App({ Component, pageProps }: AppProps) {
+  const [open, setOpen] = React.useState(false);
 
-- `pnpm build` - Build all packages, including the Storybook site
-- `pnpm dev` - Run all packages locally and preview with Storybook
-- `pnpm lint` - Lint all packages
-- `pnpm changeset` - Generate a changeset
-- `pnpm clean` - Clean up all `node_modules` and `dist` folders (runs each package's clean script)
-
-## Turborepo
-
-[Turborepo](https://turbo.build/repo) is a high-performance build system for JavaScript and TypeScript codebases. It was designed after the workflows used by massive software engineering organizations to ship code at scale. Turborepo abstracts the complex configuration needed for monorepos and provides fast, incremental builds with zero-configuration remote caching.
-
-Using Turborepo simplifies managing your design system monorepo, as you can have a single lint, build, test, and release process for all packages. [Learn more](https://vercel.com/blog/monorepos-are-changing-how-teams-build-software) about how monorepos improve your development workflow.
-
-## Apps & Packages
-
-This Turborepo includes the following packages and applications:
-
-- `apps/docs`: Component documentation site with Storybook
-- `packages/@acme/core`: Core React components
-- `packages/@acme/utils`: Shared React utilities
-- `packages/@acme/tsconfig`: Shared `tsconfig.json`s used throughout the Turborepo
-- `packages/eslint-config-acme`: ESLint preset
-
-Each package and app is 100% [TypeScript](https://www.typescriptlang.org/). Workspaces enables us to "hoist" dependencies that are shared between packages to the root `package.json`. This means smaller `node_modules` folders and a better local dev experience. To install a dependency for the entire monorepo, use the `-w` workspaces flag with `pnpm add`.
-
-This example sets up your `.gitignore` to exclude all generated files, other folders like `node_modules` used to store your dependencies.
-
-### Compilation
-
-To make the core library code work across all browsers, we need to compile the raw TypeScript and React code to plain JavaScript. We can accomplish this with `tsup`, which uses `esbuild` to greatly improve performance.
-
-Running `pnpm build` from the root of the Turborepo will run the `build` command defined in each package's `package.json` file. Turborepo runs each `build` in parallel and caches & hashes the output to speed up future builds.
-
-For `acme-core`, the `build` command is the following:
-
-```bash
-tsup src/index.tsx --format esm,cjs --dts --external react
-```
-
-`tsup` compiles `src/index.tsx`, which exports all of the components in the design system, into both ES Modules and CommonJS formats as well as their TypeScript types. The `package.json` for `acme-core` then instructs the consumer to select the correct format:
-
-```json:acme-core/package.json
-{
-  "name": "@acme/core",
-  "version": "0.0.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  return (
+    <Provider color="white" fontFamily="Fira Code">
+      <Header backgroundColor="gunMetal">
+        <Flex>
+          <Text fontWeight="700" fontSize="1.5rem">
+            Nahuel
+          </Text>
+        </Flex>
+        <Icon type="menu" onClick={() => setOpen(!open)} />
+      </Header>
+      <SideMenu open={open} setOpen={setOpen} />
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
 ```
 
-Run `pnpm build` to confirm compilation is working correctly. You should see a folder `acme-core/dist` which contains the compiled output.
+In the above example, we import the necessary components from Robust and use them to create a basic application structure. The `Provider` component sets the color and font family for the components. The `Header` component represents the application header, including a title and a menu icon that toggles the `open` state. The `SideMenu` component displays a side drawer with links and language options. Finally, we render the `Component` with the `pageProps`.
 
-```bash
-acme-core
-└── dist
-    ├── index.d.ts  <-- Types
-    ├── index.js    <-- CommonJS version
-    └── index.mjs   <-- ES Modules version
+Please note that this usage example is specific to Next.js, and the functionality may not be tested or supported in other React environments. Make sure to customize the components and their properties based on your specific requirements.
+
+## Available Components
+
+The following components are available in Robust as of July 5th:
+
 ```
+├── drawer
+│   ├── complements
+│   │   ├── DrawerBody
+│   │   │   ├── index.tsx
+│   │   │   └── types.ts
+│   │   ├── DrawerCloseButton
+│   │   │   ├── index.tsx
+│   │   │   └── types.ts
+│   │   ├── DrawerFooter
+│   │   │   ├── index.tsx
+│   │   │   └── types.ts
+│   │   ├── DrawerHeader
+│   │   │   ├── index.tsx
+│   │   │   └── types.ts
+│   │   └── index.ts
+│   ├── index.tsx
+│   ├── options
+│   │   ├── placement.ts
+│   │   └── size.ts
+│   └── types.ts
+├── header
+│   ├── index.tsx
+│   └── types.ts
+├── icon
+│   ├── circle
+│   │   ├── index.tsx
+│   │   └── types.ts
+│   ├── g
+│   │   ├── index.tsx
+│   │   └──
 
-## Components
-
-Each file inside of `acme-core/src` is a component inside our design system. For example:
-
-```tsx:acme-core/src/Button.tsx
-import * as React from 'react';
-
-export interface ButtonProps {
-  children: React.ReactNode;
-}
-
-export function Button(props: ButtonProps) {
-  return <button>{props.children}</button>;
-}
-
-Button.displayName = 'Button';
+ types.ts
+│   ├── icons
+│   │   ├── close
+│   │   │   └── index.tsx
+│   │   ├── dotsSixVertical
+│   │   │   └── index.tsx
+│   │   ├── expandMore
+│   │   │   └── index.tsx
+│   │   ├── fallbackIcon
+│   │   │   └── index.tsx
+│   │   ├── githubFill
+│   │   │   └── index.tsx
+│   │   ├── index.ts
+│   │   └── menu
+│   │       └── index.tsx
+│   ├── index.tsx
+│   ├── path
+│   │   ├── index.tsx
+│   │   └── types.ts
+│   └── types.ts
+├── index.ts
+├── layout
+│   ├── flex
+│   │   ├── index.tsx
+│   │   └── types.ts
+│   └── index.tsx
+├── link
+│   ├── index.tsx
+│   └── types.ts
+├── menu
+│   ├── index.tsx
+│   └── types.ts
+├── types.ts
+└── typography
+    ├── index.ts
+    ├── span
+    │   ├── index.tsx
+    │   └── types.ts
+    └── text
+        ├── index.tsx
+        └── types.ts
 ```
+## Features
 
-When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
+Robust includes the following features:
 
-```tsx:acme-core/src/index.tsx
-import * as React from "react";
-export { Button, type ButtonProps } from "./Button";
-// Add new component exports here
-```
+* Automatic responsiveness: The components are designed to adapt to different screen sizes and orientations.
+* Quick language switching: Easily switch between different languages using the language options provided.
+* Dark mode: The system supports a dark mode theme that can be enabled or disabled.
+* Global states: Robust provides mechanisms for managing global states and sharing data between components.
 
-## Storybook
+## Contributing
 
-Storybook provides us with an interactive UI playground for our components. This allows us to preview our components in the browser and instantly see changes when developing locally. This example preconfigures Storybook to:
+Contributions to Robust are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the GitHub repository.
 
-- Use Vite to bundle stories instantly (in milliseconds)
-- Automatically find any stories inside the `stories/` folder
-- Support using module path aliases like `@acme-core` for imports
-- Write MDX for component documentation pages
+## License
 
-For example, here's the included Story for our `Button` component:
+Robust is released under the [MIT License](https://opensource.org/licenses/MIT).
 
-```js:apps/docs/stories/button.stories.mdx
-import { Button } from '@acme-core/src';
-import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+---
 
-<Meta title="Components/Button" component={Button} />
-
-# Button
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod, nisl eget consectetur tempor, nisl nunc egestas nisi, euismod aliquam nisl nunc euismod.
-
-## Props
-
-<Props of={Box} />
-
-## Examples
-
-<Preview>
-  <Story name="Default">
-    <Button>Hello</Button>
-  </Story>
-</Preview>
-```
-
-This example includes a few helpful Storybook scripts:
-
-- `pnpm dev`: Starts Storybook in dev mode with hot reloading at `localhost:6006`
-- `pnpm build`: Builds the Storybook UI and generates the static HTML files
-- `pnpm preview-storybook`: Starts a local server to view the generated Storybook UI
-
-## Versioning & Publishing Packages
-
-This example uses [Changesets](https://github.com/changesets/changesets) to manage versions, create changelogs, and publish to npm. It's preconfigured so you can start publishing packages immediately.
-
-You'll need to create an `NPM_TOKEN` and `GITHUB_TOKEN` and add it to your GitHub repository settings to enable access to npm. It's also worth installing the [Changesets bot](https://github.com/apps/changeset-bot) on your repository.
-
-### Generating the Changelog
-
-To generate your changelog, run `pnpm changeset` locally:
-
-1. **Which packages would you like to include?** – This shows which packages and changed and which have remained the same. By default, no packages are included. Press `space` to select the packages you want to include in the `changeset`.
-1. **Which packages should have a major bump?** – Press `space` to select the packages you want to bump versions for.
-1. If doing the first major version, confirm you want to release.
-1. Write a summary for the changes.
-1. Confirm the changeset looks as expected.
-1. A new Markdown file will be created in the `changeset` folder with the summary and a list of the packages included.
-
-### Releasing
-
-When you push your code to GitHub, the [GitHub Action](https://github.com/changesets/action) will run the `release` script defined in the root `package.json`:
-
-```bash
-turbo run build --filter=docs^... && changeset publish
-```
-
-Turborepo runs the `build` script for all publishable packages (excluding docs) and publishes the packages to npm. By default, this example includes `acme` as the npm organization. To change this, do the following:
-
-- Rename folders in `packages/*` to replace `acme` with your desired scope
-- Search and replace `acme` with your desired scope
-- Re-run `pnpm install`
-
-To publish packages to a private npm organization scope, **remove** the following from each of the `package.json`'s
-
-```diff
-- "publishConfig": {
--  "access": "public"
-- },
-```
