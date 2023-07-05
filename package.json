@@ -17,7 +17,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish-packages": "turbo run build lint --filter=!./apps/* && changeset version && changeset publish",
+    "release": "turbo run build lint --filter=!./apps/* && changeset publish",
     "prepare": "turbo run build --filter=!./apps/*"
   },
   "devDependencies": {
