@@ -8,7 +8,6 @@ import React, { useState, useEffect } from "react";
 import { DynamicStyles } from "@robust/constructor";
 import { processChildren } from "@robust/functions";
 import { MenuProps } from "./types";
-
 import { Text } from "@/typography";
 import { Flex, Icon } from "..";
 
