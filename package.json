@@ -1,6 +1,6 @@
 {
   "private": true,
-  "author": "Nahuel Rosas <rosasnahuel.dev@gmail.com>",
+  "author": "Nahuel Rosas <nahuel.rosas@mi.unc.edu.ar>",
   "license": "MIT",
   "workspaces": [
     "apps/*",
