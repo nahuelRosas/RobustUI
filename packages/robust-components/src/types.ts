@@ -1,7 +1,7 @@
 import { Ref } from "react";
 // Importing the "Ref" type from "react"
 
-import { CssPropertyMappings, defaultTheme } from "@robust/theme";
+import { CssPropertyMappings, defaultTheme ,cssGenerators,Language} from "@robust/theme";
 // Importing "CssPropertyMappings" and "Theme" from "@robust/theme"
 
 export type ThemeType = typeof defaultTheme;
@@ -21,6 +21,18 @@ type CssPropertyMapping = {
 };
 // Defining a type "CssPropertyMapping" that maps CSS property names to their corresponding values in the theme
 
+type CssGeneratorMapping = {
+  [Key in keyof typeof cssGenerators]?: (typeof cssGenerators)[Key];
+};
+
+type MergeCssMappings<A, B> = Omit<A, keyof B> & B;
+
+/*
+type CustomHTMLAttributes<T> = React.HTMLAttributes<T> &
+  MergeCssMappings<CssGeneratorMapping, CssPropertyMapping>;
+*/
+
+
 type CustomHTMLAttributes<T> = React.HTMLAttributes<T> & CssPropertyMapping;
 // Defining a type "CustomHTMLAttributes" that extends the standard HTML attributes with CSS property mappings
 
@@ -29,6 +41,7 @@ export interface BaseProps extends CustomHTMLAttributes<HTMLElement> {
   componentName?: string;
   ref?: Ref<unknown> | undefined;
   isDraggable?: boolean | undefined;
+  multiLanguage?: Partial<Record<keyof typeof Language, unknown>>;
   [key: string]: unknown;
 }
 // Defining an interface "BaseProps" that extends the custom HTML attributes and includes additional props for the base component
