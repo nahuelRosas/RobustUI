@@ -81,8 +81,8 @@ export function Link({
         })
       }
       optimizedWidth
-      
-      {...props}>
+      {...props}
+    >
       {clonedChildren}
     </Component>
   );

@@ -1,6 +1,7 @@
 {
   "name": "eslint-config-robust",
-  "version": "0.0.2",
+  "version": "0.0.1",
+  "author": "Nahuel Rosas <nahuel.rosas@mi.unc.edu.ar>",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
@@ -17,5 +18,6 @@
   },
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages && rm -rf CHANGELOG.md"
-  }
+  },
+  "description": ""
 }

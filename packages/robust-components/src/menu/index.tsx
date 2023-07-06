@@ -56,13 +56,15 @@ export function Menu({
           display={shouldDisplay}
           onClick={handleToggleMenu}
           flexDirection="row"
-          {...props}>
+          {...props}
+        >
           {title && (
             <Text
               pr={0}
               fontWeight="inherit"
               fontSize="2rem"
-              multiLanguage={typeof title === "object" ? title : undefined}>
+              multiLanguage={typeof title === "object" ? title : undefined}
+            >
               {typeof title === "string" && title}
             </Text>
           )}
@@ -79,7 +81,8 @@ export function Menu({
           display={shouldDisplay}
           onClick={handleToggleMenu}
           flexDirection="row"
-          {...props}>
+          {...props}
+        >
           <Text fontSize="2rem" pr={0} fontWeight="inherit">
             Menu
           </Text>
@@ -93,7 +96,8 @@ export function Menu({
         flexDirection="column"
         display={isOpen ? "flex" : "none"}
         ref={ref}
-        {...props}>
+        {...props}
+      >
         {clonedChildren}
       </MenuComponent>
     </>

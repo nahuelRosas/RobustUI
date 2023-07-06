@@ -55,7 +55,7 @@ export const cssGenerators = {
   optimizedWidth: (): string => `width: -moz-available;
   width: -webkit-fill-available;
   `,
-  optimizedHeight: (): string => `height: -moz-available;
+  optimizedHeight: (): string => `height: 100vh;
   height: -webkit-fill-available;
   `,
   alignContent: (propValue: string): string => `align-content: ${propValue};`,

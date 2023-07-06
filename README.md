@@ -120,14 +120,15 @@ The following components are available in Robust as of July 5th:
         ├── index.tsx
         └── types.ts
 ```
+
 ## Features
 
 Robust includes the following features:
 
-* Automatic responsiveness: The components are designed to adapt to different screen sizes and orientations.
-* Quick language switching: Easily switch between different languages using the language options provided.
-* Dark mode: The system supports a dark mode theme that can be enabled or disabled.
-* Global states: Robust provides mechanisms for managing global states and sharing data between components.
+- Automatic responsiveness: The components are designed to adapt to different screen sizes and orientations.
+- Quick language switching: Easily switch between different languages using the language options provided.
+- Dark mode: The system supports a dark mode theme that can be enabled or disabled.
+- Global states: Robust provides mechanisms for managing global states and sharing data between components.
 
 ## Contributing
 
@@ -138,4 +139,3 @@ Contributions to Robust are welcome! If you find any issues or have suggestions 
 Robust is released under the [MIT License](https://opensource.org/licenses/MIT).
 
 ---
-

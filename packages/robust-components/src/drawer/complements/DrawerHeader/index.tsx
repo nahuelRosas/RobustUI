@@ -11,9 +11,9 @@ export function DrawerHeader({ children, ...props }: DrawerHeaderProps) {
       display="flex"
       justifyContent="center"
       alignItems="center"
-      optimizedWidth 
-      
-      {...props}>
+      optimizedWidth
+      {...props}
+    >
       {children}
     </Span>
   );
