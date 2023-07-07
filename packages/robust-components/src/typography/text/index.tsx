@@ -1,12 +1,19 @@
-import React from "react";
 import { DynamicStyles } from "@robust/constructor";
+import React from "react";
 import { TextProps } from "./types";
 
 const Component = DynamicStyles({
   Component: "p",
 });
 
-export function Text({ children, ref, ...props }: TextProps) {
+export function Text({
+  children,
+  ref,
+  selectorMultiColors,
+  colors,
+  colorsRandom,
+  ...props
+}: TextProps) {
   return (
     <Component
       fontSize="1rem"
@@ -15,8 +22,7 @@ export function Text({ children, ref, ...props }: TextProps) {
       lineHeight="normal"
       padding="1rem"
       ref={ref}
-      {...props}
-    >
+      {...props}>
       {children}
     </Component>
   );

@@ -10,6 +10,7 @@ export const cssGenerators = {
   paddingTop: (propValue: string): string => `padding-top: ${propValue};`,
   paddingBottom: (propValue: string): string => `padding-bottom: ${propValue};`,
   background: (propValue: string): string => `background: ${propValue};`,
+  fontColor: (propValue: string): string => `color: ${propValue};`,
   backgroundColor: (propValue: string): string =>
     `background-color: ${propValue};`,
   opacity: (propValue: string): string => `opacity: ${propValue};`,

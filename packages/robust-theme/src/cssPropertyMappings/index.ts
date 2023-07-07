@@ -80,4 +80,5 @@ export enum CssPropertyMappings {
   // Positioning
   position = "position",
   flexShrink = "flexShrink",
+  fontStyle = "fontStyle",
 }
