@@ -1,13 +1,12 @@
 import { useGlobalContext } from "@robust/hooks";
 import { GlobalContext } from "@robust/contexts";
-import { Language } from "@robust/theme";
 
-export function RecoveryLanguage(): string {
-  const { language } = useGlobalContext({
+export function RecoveryFramework(): string | null {
+  const { framework } = useGlobalContext({
     providerContext: GlobalContext,
   });
-  if (language) {
-    return language;
+  if (framework) {
+    return framework;
   }
-  return Language["en"];
+  return null;
 }

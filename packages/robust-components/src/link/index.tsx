@@ -1,7 +1,8 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 import { DynamicStyles } from "@robust/constructor";
+import { RecoveryFramework } from "@robust/tools";
 import { LinkProps } from "./types";
-import { isInternalURL, handleMouseEnterLink } from "@robust/functions";
+import NextLink from "next/link";
 
 const Component = DynamicStyles({
   Component: "a",
@@ -10,80 +11,23 @@ const Component = DynamicStyles({
 export function Link({
   children,
   ref,
-  href,
-  replace = true,
-  prefetch = true,
-  checkActive = "pathname",
-  openNewTab = false,
-  passHref,
-  onClick,
-  target,
   ...props
 }: LinkProps): React.JSX.Element {
-  const [hasPrefetched, setHasPrefetched] = useState(false);
-
-  const handleClick = useCallback(
-    function (event: React.MouseEvent<HTMLElement>): void {
-      event.preventDefault();
-      if (onClick) {
-        onClick(event as React.MouseEvent<HTMLElement>);
-      }
-
-      if (target) {
-        window.open(href as URL, target);
-      }
-
-      if (
-        (isInternalURL({ url: href as string }) ||
-          (process.env["NODE_ENV"] !== "development" && href)) &&
-        !openNewTab
-      ) {
-        window.history[replace ? "replaceState" : "pushState"](null, "", href);
-      } else {
-        window.open(href as URL, "_blank");
-      }
-    },
-    [href, onClick, openNewTab, replace, target]
-  );
-
-  function cloneElementWithHref({
-    child,
-  }: {
-    child: React.ReactElement;
-  }): React.ReactElement {
-    return React.cloneElement(child, { href });
-  }
-
-  const clonedChildren = React.Children.map(children, (child) => {
-    if (React.isValidElement(child) && passHref) {
-      return cloneElementWithHref({ child });
-    }
-    return child;
-  });
+  const framework = RecoveryFramework();
 
   return (
     <Component
-      componentName="Link"
+      as={framework === "Next.js" ? NextLink : "a"}
+      componentName={framework === "Next.js" ? "NextLink" : "Link"}
       ref={ref}
       display="flex"
       flexDirection="row"
       alignItems="center"
       textDecoration="none"
       color="currentColor"
-      href={!passHref && href}
-      onClick={handleClick}
-      onMouseEnter={() =>
-        handleMouseEnterLink({
-          prefetch,
-          hasPrefetched,
-          href: href as string,
-          setHasPrefetched,
-        })
-      }
       optimizedWidth
-      {...props}
-    >
-      {clonedChildren}
+      {...props}>
+      {children}
     </Component>
   );
 }

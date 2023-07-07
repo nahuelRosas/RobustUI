@@ -37,7 +37,7 @@ export function multiColorString({
                 const colorStr = multiColors.colorsRandom
                   ? randomColor({ seed: text })
                   : undefined;
-                return { text, colorKey, colorStr };
+                return { text, colorKey,  colorStr };
               });
         })
         .flat()

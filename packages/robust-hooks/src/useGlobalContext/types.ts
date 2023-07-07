@@ -64,4 +64,7 @@ export interface globalContextValue {
    * @param language - The language code to be set.
    */
   changeLanguage: (language: keyof typeof Language) => void;
+
+  framework: string | null
+
 }

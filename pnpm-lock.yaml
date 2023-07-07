@@ -104,6 +104,9 @@ importers:
       '@robust/theme':
         specifier: workspace:*
         version: link:../robust-theme
+      '@robust/tools':
+        specifier: workspace:*
+        version: link:../robust-tools
       '@robust/tsconfig':
         specifier: workspace:*
         version: link:../robust-tsconfig

@@ -3,6 +3,7 @@ export * from "./cloneElementWithFunction";
 export * from "./createCSSRule";
 export * from "./createStyleSheet";
 export * from "./debounce";
+export * from "./detectFrameworksInternal";
 export * from "./generateCSScode";
 export * from "./generateHash";
 export * from "./generateId";

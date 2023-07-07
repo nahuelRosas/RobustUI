@@ -1,10 +1,13 @@
-import { useIsomorphicLayoutEffect, useBreakpointValue } from "@robust/hooks";
+import {
+  useIsomorphicLayoutEffect,
+  useBreakpointValue,
+  useFrameworkDetection,
+} from "@robust/hooks";
 import { useMemo, useReducer, useState, useRef, useCallback } from "react";
 import { GlobalStateReducer, GlobalContext } from "@robust/contexts";
 import { DynamicStyles } from "@robust/constructor";
 import { GlobalProviderProps } from "./types";
 import { Language } from "@robust/theme";
-
 import React from "react";
 
 /**
@@ -23,7 +26,7 @@ export function GlobalProvider({
   const [globalState, dispatch] = useReducer(GlobalStateReducer, {});
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [language, setLanguage] = useState<keyof typeof Language>("en");
-
+  const framework = useFrameworkDetection();
   // Refs
   const activeProviderState = useRef(false);
   const generatedGlobalRef = useRef({});
@@ -133,6 +136,7 @@ export function GlobalProvider({
       language,
       changeLanguage,
       toggleDarkMode,
+      framework,
     };
   }, [
     resetGeneratedIds,
@@ -146,6 +150,7 @@ export function GlobalProvider({
     language,
     changeLanguage,
     toggleDarkMode,
+    framework,
   ]);
   // Set the isMounted ref when the component is mounted
   useIsomorphicLayoutEffect(() => {
@@ -166,8 +171,7 @@ export function GlobalProvider({
         display="grid"
         optimizedWidth
         optimizedHeight
-        {...props}
-      >
+        {...props}>
         {children}
       </Provider>
     </GlobalContext.Provider>

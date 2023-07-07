@@ -4,9 +4,9 @@ import {
   DrawerBody,
   DrawerFooter,
   Text,
-  Link,
   Menu,
   Icon,
+  Link,
   useLanguage,
 } from "@robust/nextjs";
 import React from "react";
@@ -24,8 +24,7 @@ export function SideMenu({
       // passClose
       open={open}
       placement="right"
-      onClose={() => setOpen(!open)}
-    >
+      onClose={() => setOpen(!open)}>
       <DrawerHeader justifyContent="left" fontSize="1.5rem">
         Nahuel
       </DrawerHeader>
@@ -78,28 +77,28 @@ export function SideMenu({
         <Menu
           title={language.toUpperCase()}
           fontWeight="500"
-          icon={<Icon type="expandMore" size="2rem" pl={0} />}
-        >
+          icon={<Icon type="expandMore" size="2rem" pl={0} />}>
           <Text
             fontWeight={language === "en" ? "bold" : "normal"}
             p={0}
             fontSize="2rem"
-            onClick={() => setLanguage("en")}
-          >
+            onClick={() => setLanguage("en")}>
             EN
           </Text>
           <Text
             fontWeight={language === "es" ? "bold" : "normal"}
             p={0}
             fontSize="2rem"
-            onClick={() => setLanguage("es")}
-          >
+            onClick={() => setLanguage("es")}>
             ES
           </Text>
         </Menu>
       </DrawerBody>
       <DrawerFooter>
-        <Link href="https://github.com/nahuelRosas" justifyContent="center">
+        <Link
+          href="https://github.com/nahuelRosas"
+          //  justifyContent="center"
+        >
           <Icon type="githubFill" size="4rem" />
         </Link>
       </DrawerFooter>
