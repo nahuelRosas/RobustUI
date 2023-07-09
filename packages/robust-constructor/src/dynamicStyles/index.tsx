@@ -12,7 +12,7 @@ import { generateId, safeJSON, handleError } from "@robust/functions";
 import { useIsomorphicLayoutEffect } from "@robust/hooks";
 // Importing the "useIsomorphicLayoutEffect" hook from "@robust/hooks"
 
-import React, { forwardRef, useRef, useEffect } from "react";
+import React, { forwardRef, useRef, useEffect, isValidElement } from "react";
 // Importing React, "forwardRef", "useRef", and "useEffect" from "react"
 
 import { cssGenerators, CssPropertyMappings } from "@robust/theme";
@@ -178,11 +178,21 @@ export function DynamicStyles<T extends object>({
     if (!activeProvider && !OmitProvider) return null;
 
     // Render the wrapped component with the generated className and other props
+
+    const childrenMultiLanguage =
+      typeof multiLanguage !== "undefined" &&
+      multiLanguage[language as keyof typeof multiLanguage];
+
+    if (childrenMultiLanguage) {
+      return (
+        <Element className={className} ref={ref} {...domProps}>
+          {childrenMultiLanguage}
+        </Element>
+      );
+    }
+
     return (
       <Element className={className} ref={ref} {...domProps}>
-        {multiLanguage &&
-          language &&
-          multiLanguage[language as keyof typeof multiLanguage]}
         {children}
       </Element>
     );
