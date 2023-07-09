@@ -36,6 +36,10 @@ export enum CssPropertyMappings {
   top = "sizes",
   bottom = "sizes",
   gap = "sizes",
+  minH = "sizes",
+  minW = "sizes",
+  maxH = "sizes",
+  maxW = "sizes",
 
   // Flexbox
   justifyContent = "justifyContent",

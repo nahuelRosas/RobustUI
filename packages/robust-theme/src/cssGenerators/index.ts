@@ -61,4 +61,6 @@ export const cssGenerators = {
   `,
   alignContent: (propValue: string): string => `align-content: ${propValue};`,
   alignItems: (propValue: string): string => `align-items: ${propValue};`,
+  minW: (propValue: string): string => `min-width: ${propValue};`,
+  minH: (propValue: string): string => `min-height: ${propValue};`,
 };
