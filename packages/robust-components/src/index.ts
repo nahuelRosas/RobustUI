@@ -5,3 +5,5 @@ export * from "./layout";
 export * from "./drawer";
 export * from "./link";
 export * from "./menu";
+export * from "./image";
+export * from "./spinner";

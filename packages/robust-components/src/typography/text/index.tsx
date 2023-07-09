@@ -22,7 +22,8 @@ export function Text({
       lineHeight="normal"
       padding="1rem"
       ref={ref}
-      {...props}>
+      {...props}
+    >
       {children}
     </Component>
   );

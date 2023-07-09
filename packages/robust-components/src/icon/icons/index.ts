@@ -4,6 +4,7 @@ import { menu } from "./menu";
 import { close } from "./close";
 import { expandMore } from "./expandMore";
 import { githubFill } from "./githubFill";
+import { error } from "./error";
 export const icons = {
   menu,
   dotsSixVertical,
@@ -11,4 +12,5 @@ export const icons = {
   close,
   expandMore,
   githubFill,
+  error,
 };

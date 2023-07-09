@@ -26,7 +26,8 @@ export function Link({
       textDecoration="none"
       color="currentColor"
       optimizedWidth
-      {...props}>
+      {...props}
+    >
       {children}
     </Component>
   );

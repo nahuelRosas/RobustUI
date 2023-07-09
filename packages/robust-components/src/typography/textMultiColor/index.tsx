@@ -40,7 +40,8 @@ export function TextMultiColor({
               fontSize="inherit"
               fontStyle="inherit"
               fontWeight="inherit"
-              lineHeight="inherit">
+              lineHeight="inherit"
+            >
               {child.text}
             </Span>
           );
@@ -57,7 +58,8 @@ export function TextMultiColor({
       lineHeight="normal"
       padding="1rem"
       ref={ref}
-      {...props}>
+      {...props}
+    >
       {processedChildren}
     </Component>
   );
