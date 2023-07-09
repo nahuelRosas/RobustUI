@@ -4,10 +4,19 @@
   "author": "Nahuel Rosas <nahuel.rosas@mi.unc.edu.ar>",
   "private": false,
   "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "scripts": {
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm -rf packages && rm -rf CHANGELOG.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nahuelRosas/Robust.git",
+    "directory": "packages/robust-tsconfig"
+  },
+  "homepage": "https://github.com/nahuelRosas/Robust#readme",
+  "bugs": {
+    "url": "https://github.com/nahuelRosas/Robust/issues"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
