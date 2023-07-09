@@ -6,4 +6,6 @@ export interface ImageProps extends BaseProps {
   alt: string;
   size?: keyof typeof defaultTheme.sizes;
   isLoading?: boolean;
+  ratio?: string;
+  isRounded?: boolean;
 }
