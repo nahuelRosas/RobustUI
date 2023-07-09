@@ -26,8 +26,12 @@ export function Link({
       textDecoration="none"
       color="currentColor"
       optimizedWidth
-      {...props}
-    >
+      aria-label={
+        typeof children === "string"
+          ? children.replace(/\s/g, "")
+          : props.href || "Link"
+      }
+      {...props}>
       {children}
     </Component>
   );

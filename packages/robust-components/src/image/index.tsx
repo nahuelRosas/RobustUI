@@ -50,8 +50,6 @@ export function Image({
     }
   }
 
-  console.log(adjustedSize);
-
   return (
     <Flex
       padding="1.25rem"
