@@ -65,5 +65,5 @@ export interface globalContextValue {
    */
   changeLanguage: (language: keyof typeof Language) => void;
 
-  framework: string | null
+  framework: string | null;
 }
