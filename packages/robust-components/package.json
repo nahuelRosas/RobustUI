@@ -1,6 +1,6 @@
 {
   "name": "@robust/components",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Nahuel Rosas <nahuel.rosas@mi.unc.edu.ar>",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
