@@ -47,7 +47,7 @@ export function getPropValueWithBreakPoint({
   // Check if the property value is undefined
   else if (typeof propValue === "undefined") {
     // Get the location where the error occurred
-    const Location = new Error().stack?.split("\n")[2];
+    const Location = new Error().stack?.split("\n")[1];
 
     // Throw an error with the invalid propValue and its location
     throw new Error(`Invalid propValue ${propValue} at ${Location}`);
