@@ -1,19 +1,28 @@
+import { splitComponentString } from "../splitComponenteString";
+
 export function getErrorLocation(): string {
   try {
     throw new Error();
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      if (error.stack) {
-        const stackLines = error.stack.split("\n");
-        const locationLine = stackLines[2]?.trim();
-        const regex = /\((.*):(\d+):(\d+)\)$/;
-        const match = regex.exec(locationLine);
+  } catch (error) {
+    if (error instanceof Error && error.stack) {
+      const stackLines = error.stack.split("\n");
+      let locationLine: string = "";
 
-        if (match) {
-          const [, fileName, lineNumber, columnNumber] = match;
-          return `${fileName}:${lineNumber}:${columnNumber}`;
+      for (let i = 1; i < stackLines.length; i++) {
+        if (
+          !stackLines[i].includes("/node_modules/") &&
+          !stackLines[i].includes("packages/robust-")
+        ) {
+          locationLine = stackLines[i].trim();
+          break;
         }
       }
+
+      const locationObject = splitComponentString({
+        input: locationLine,
+      });
+
+      return `Location: ${locationObject.component} ${locationObject.URL}`;
     }
 
     return "Unknown Location";
