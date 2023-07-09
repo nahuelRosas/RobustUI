@@ -1,5 +1,7 @@
-import { useRef, useState, useEffect, useCallback } from "react";
-import { UseImageT, ImageEvent } from "@robust/hooks";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useGlobalState } from "../useGlobalState";
+import { useIsomorphicLayoutEffect } from "../useIsomorphicLayoutEffect";
+import { ImageEvent, UseImageProps } from "./types";
 
 export function useImage({
   src,
@@ -9,20 +11,21 @@ export function useImage({
   crossOrigin,
   sizes,
   ignoreFallback = false,
-  delay = 1200,
-}: UseImageT): string {
-  // const [imagesLoaded, setImagesLoaded] = useGlobalState<string[]>({
-  // 	defaultValue: [],
-  // 	key: 'imagesLoaded',
-  // });
-  const [imagesLoaded, setImagesLoaded] = useState<string[]>([]);
+  delay = 500,
+}: UseImageProps): "failed" | "loaded" | "loading" | "pending" {
+  const [imagesLoaded, setImagesLoaded] = useGlobalState<string[]>({
+    defaultValue: [],
+    key: "imagesLoaded",
+  });
   const imageRef = useRef<HTMLImageElement | null>(null);
-  const [status, setStatus] = useState("pending");
+  const [status, setStatus] = useState<
+    "failed" | "loaded" | "loading" | "pending"
+  >("pending");
   const [isDelayed, setIsDelayed] = useState<boolean>(true);
   const [_ignoreFallback, setIgnoreFallback] =
     useState<boolean>(ignoreFallback);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!src && !isDelayed) {
       setStatus("failed");
       return;
@@ -46,7 +49,7 @@ export function useImage({
   const load = useCallback(() => {
     if (!src) return;
 
-    if (imagesLoaded.includes(src)) {
+    if (imagesLoaded.includes(src as string)) {
       setStatus("loaded");
       return;
     }
@@ -54,7 +57,7 @@ export function useImage({
     cleanupImage();
 
     const image = new Image();
-    image.src = src;
+    image.src = src as string;
 
     if (crossOrigin) {
       image.crossOrigin = crossOrigin;
@@ -100,7 +103,7 @@ export function useImage({
     onError,
   ]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (_ignoreFallback) {
       return;
     }
@@ -117,7 +120,7 @@ export function useImage({
     return cleanupImage;
   }, [status, load, delay, _ignoreFallback, cleanupImage]);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     return () => {
       cleanupImage();
     };
